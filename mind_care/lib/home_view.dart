@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mind_care/login_view.dart';
+import 'package:mind_care/view/login_view.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

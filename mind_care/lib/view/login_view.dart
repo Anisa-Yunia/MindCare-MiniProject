@@ -1,12 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:mind_care/helpen/firebase_auth.dart';
-import 'package:mind_care/helpen/validator.dart';
+import 'package:mind_care/viewModel/helpen/firebase_auth.dart';
+import 'package:mind_care/viewModel/helpen/validator.dart';
 import 'package:mind_care/home_screen.dart';
-import 'package:mind_care/sign_up.dart';
+import 'package:mind_care/view/sign_up_view.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -56,28 +58,29 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding:
                     const EdgeInsets.only(left: 24.0, right: 24.0, top: 48),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // SizedBox(
-                    //   child: Image.network(
-                    //       'https://firebasestorage.googleapis.com/v0/b/mind-care-minpro.appspot.com/o/mindCare.png?alt=media&token=bccf17b5-f349-4a82-8d76-57e391b78ed9&_gl=1*1b6ixa6*_ga*MTk5MzA0MDY0OC4xNjk2Mjk5ODQ1*_ga_CW55HF8NVT*MTY5NzY5MzUwNS4yMS4xLjE2OTc2OTM4MzUuNjAuMC4w'),
-                    //   //'gs://mind-care-minpro.appspot.com/mindCare.png',
-                    // ),
+                    Center(
+                      child: SizedBox(
+                          child: Image.asset(
+                        'images/mindCare.png',
+                        width: 170,
+                        height: 170,
+                      )),
+                    ),
                     Text(
                       'MindCare',
                       style: TextStyle(
                         color: Colors.blueGrey,
-                        fontSize: 40,
+                        fontSize: 30,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
                       'Your Mental Wellness Companion',
                       style: TextStyle(
-                          color: Colors.blueGrey.shade600, fontSize: 20),
+                          color: Colors.blueGrey.shade600, fontSize: 16),
                     ),
-
                     SizedBox(height: 15),
                     Form(
                       key: _formKey,
@@ -93,7 +96,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               labelText: 'E-mail',
                               hintText: "input your E-mail",
                               prefixIcon: Icon(Icons.email_outlined),
-                              border: OutlineInputBorder(gapPadding: 10),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 10.0),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0)),
                               errorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(6.0),
                                 borderSide: BorderSide(
@@ -113,7 +119,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             decoration: InputDecoration(
                               labelText: 'Password',
                               hintText: "Password",
-                              border: OutlineInputBorder(),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 10.0),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0)),
                               prefixIcon: Icon(Icons.lock),
                               errorBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(6.0),

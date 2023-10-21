@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mind_care/login_view.dart';
-//import 'package:sji_info/screens/login_screen.dart';
-//mport 'package:mind_care/helpen/firebase_auth.dart';
+import 'package:mind_care/view/login_view.dart';
+import 'package:mind_care/viewModel/widget/bottom_navigator.dart';
+import 'package:mind_care/viewModel/widget/drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   final User user;
@@ -25,11 +25,15 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        // appBar: AppBar(
+        //   backgroundColor: Colors.deepOrangeAccent,
+        //   title: Text('HomeScreen'),
+        //   centerTitle: true,
+        // ),
         appBar: AppBar(
-          backgroundColor: Colors.deepOrangeAccent,
-          title: Text('HomeScreen'),
-          centerTitle: true,
+          title: Text('Mindcare'),
         ),
+        bottomNavigationBar: BottomNav(),
         body: WillPopScope(
           onWillPop: () async {
             final logout = await showDialog<bool>(
@@ -62,35 +66,13 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'NAME: ${_currentUser.displayName}',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
                 SizedBox(height: 16.0),
-                Text(
-                  'EMAIL: ${_currentUser.email}',
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                SizedBox(height: 16.0),
-                ElevatedButton(
-                  onPressed: () async {
-                    await FirebaseAuth.instance.signOut();
-
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => LoginScreen(),
-                      ),
-                    );
-                  },
-                  child: const Text('Sign out'),
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.redAccent),
-                  ),
-                ),
               ],
             ),
           ),
+        ),
+        drawer: DrawerWid(
+          user: _currentUser,
         ));
   }
 
