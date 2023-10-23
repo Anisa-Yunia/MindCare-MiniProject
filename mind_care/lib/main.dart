@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mind_care/view/home_view.dart';
 import 'package:mind_care/view/login_view.dart';
 
 void main() async {
@@ -23,7 +25,15 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey.shade300),
         useMaterial3: true,
       ),
-      home: LoginScreen(),
+
+      initialRoute: '/login', // Rute awal
+      routes: {
+        '/login': (context) => LoginScreen(),
+        // '/homeScreen': (context) => HomeScreen(user: user,),
+        // '/chat': (context) => ChatScreen(),
+        // '/riwayat': (context) => RiwayatScreen(),
+        // '/profile': (context) => ProfileScreen(),
+      },
     );
   }
 }

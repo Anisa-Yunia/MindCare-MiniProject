@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mind_care/viewModel/widget/bottom_navigator.dart';
 
-class profile extends StatelessWidget {
-  profile({super.key});
+class akun extends StatelessWidget {
+  akun({super.key});
   final List<String> menuItems = [
     'Item 1',
     'Item 2',
@@ -25,7 +25,7 @@ class profile extends StatelessWidget {
               },
             );
           }),
-          bottomNavigationBar: CurvedBottomNavigationBar(),
+      bottomNavigationBar: CurvedBottomNavigationBar(),
     );
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mind_care/view/account_view.dart';
-import 'package:mind_care/view/home_view.dart';
 
 class CurvedBottomNavigationBar extends StatefulWidget {
   @override
@@ -19,15 +18,13 @@ class _CurvedBottomNavigationBarState extends State<CurvedBottomNavigationBar> {
     setState(() {
       _currentIndex = index;
 
-      if (index == 0) {
+      if (index == Navigator.pushNamed(context, '/home')) {
         _currentMenu = 'Home';
-      } else if (index == 1) {
+      } else if (index == Navigator.pushNamed(context, '/chat')) {
         _currentMenu = 'Order';
-      } else if (index == 2) {
+      } else if (index == Navigator.pushNamed(context, '/riwayat')) {
         _currentMenu = 'Inbox';
-      } else if (index ==
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => profile()))) {
+      } else if (index == Navigator.pushNamed(context, '/profile')) {
         _currentMenu = 'Account';
       }
     });

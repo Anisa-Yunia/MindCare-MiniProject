@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors_in_immutables
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mind_care/view/login_view.dart';
@@ -36,13 +34,40 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text('Halo, ${_currentUser.displayName} '),
       ),
       bottomNavigationBar: CurvedBottomNavigationBar(),
-      body: SingleChildScrollView(
+      body: WillPopScope(
+        onWillPop: () async {
+          final logout = await showDialog<bool>(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: new Text('Are you sure?'),
+                content: new Text('Do you want to logout from this App'),
+                actionsAlignment: MainAxisAlignment.spaceBetween,
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Logout();
+                    },
+                    child: const Text('Yes'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context, false);
+                    },
+                    child: const Text('No'),
+                  ),
+                ],
+              );
+            },
+          );
+          return logout!;
+        },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
               Card(
-                elevation: 7, // Tinggi bayangan card
+                elevation: 5, // Tinggi bayangan card
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
@@ -52,12 +77,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontSize: 16, fontWeight: FontWeight.bold)),
                       subtitle: Text('Bagaimana Kabarmu Hari ini ?'),
                     ),
-                    SizedBox(height: 30),
+                    SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         ElevatedButton(
-                            onPressed: () {}, child: Text('Chat with Mica')),
+                            onPressed: () {},
+                            child: Text('Ingin bercerita dengan minca?')),
                       ],
                     ),
                     SizedBox(
@@ -67,32 +93,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               SizedBox(
-                height: 30,
+                height: 20,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   GestureDetector(
                     onTap: () {
                       // Pindah ke halaman pertama
                       //Navigator.push(context, MaterialPageRoute(builder: (context) => PageOne()));
                     },
-                    child: Column(
-                      children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.blue.shade200,
-                          radius: 30.0,
-                          child: Icon(
-                            Icons.emoji_emotions_outlined,
-                            size: 40,
-                            color: Colors.white,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5.0,
-                        ),
-                        Text('Mood Track')
-                      ],
+                    child: CircleAvatar(
+                      backgroundColor: Colors.blue,
+                      radius: 25.0,
+                      child: Text('1',
+                          style: TextStyle(fontSize: 24, color: Colors.white)),
                     ),
                   ),
                   SizedBox(width: 10.0),
@@ -101,18 +116,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       // Pindah ke halaman kedua
                       //Navigator.push(context, MaterialPageRoute(builder: (context) => PageTwo()));
                     },
-                    child: Column(
-                      children: [
-                        CircleAvatar(
-                            backgroundColor: Colors.green.shade200,
-                            radius: 30.0,
-                            child: Icon(
-                              Icons.edit_document,
-                              size: 40,
-                              color: Colors.white,
-                            )),
-                        Text('Skrining Tes')
-                      ],
+                    child: CircleAvatar(
+                      backgroundColor: Colors.green,
+                      radius: 25.0,
+                      child: Text('2',
+                          style: TextStyle(fontSize: 24, color: Colors.white)),
                     ),
                   ),
                   SizedBox(width: 10.0),
@@ -121,18 +129,24 @@ class _HomeScreenState extends State<HomeScreen> {
                       // Pindah ke halaman ketiga
                       //Navigator.push(context, MaterialPageRoute(builder: (context) => PageThree()));
                     },
-                    child: Column(
-                      children: [
-                        CircleAvatar(
-                            backgroundColor: Color.fromARGB(255, 231, 169, 148),
-                            radius: 30.0,
-                            child: Icon(
-                              Icons.people_sharp,
-                              size: 40,
-                              color: Colors.white,
-                            )),
-                        Text('Konseling')
-                      ],
+                    child: CircleAvatar(
+                      backgroundColor: Colors.orange,
+                      radius: 25.0,
+                      child: Text('3',
+                          style: TextStyle(fontSize: 24, color: Colors.white)),
+                    ),
+                  ),
+                  SizedBox(width: 10.0),
+                  GestureDetector(
+                    onTap: () {
+                      // Pindah ke halaman ketiga
+                      //Navigator.push(context, MaterialPageRoute(builder: (context) => PageThree()));
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: Colors.orange,
+                      radius: 25.0,
+                      child: Text('3',
+                          style: TextStyle(fontSize: 24, color: Colors.white)),
                     ),
                   ),
                 ],
