@@ -33,8 +33,7 @@ class _DrawerWidgetState extends State<DrawerWid> {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.home),
-            title: Text('Beranda'),
+            title: Text('Profile'),
             onTap: () {},
           ),
           ListTile(
