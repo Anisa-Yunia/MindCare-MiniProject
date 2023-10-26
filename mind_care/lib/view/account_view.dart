@@ -1,31 +1,77 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mind_care/view/login_view.dart';
+import 'package:mind_care/viewModel/provider/user_provider.dart';
 import 'package:mind_care/viewModel/widget/bottom_navigator.dart';
+import 'package:provider/provider.dart';
 
-class akun extends StatelessWidget {
-  akun({super.key});
-  final List<String> menuItems = [
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
-  ];
-
+class MenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView.builder(
-          itemCount: menuItems.length,
-          itemBuilder: (BuildContext context, int index) {
-            return ListTile(
-              title: Text(menuItems[index]),
-              onTap: () {
-                // Tambahkan aksi yang ingin Anda lakukan saat item diklik di sini.
-                // Misalnya, buka halaman terkait dengan item yang dipilih.
-              },
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    Future<void> _logout() async {
+      await FirebaseAuth.instance.signOut();
+      userProvider.setUser(null); // Clear user data
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => LoginScreen()));
+    }
+
+    return WillPopScope(
+      onWillPop: () async {
+        final logout = await showDialog<bool>(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Are you sure?'),
+              content: Text('Do you want to logout from this App'),
+              actionsAlignment: MainAxisAlignment.spaceBetween,
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    _logout();
+                  },
+                  child: const Text('Yes'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context, false);
+                  },
+                  child: const Text('No'),
+                ),
+              ],
             );
-          }),
-      bottomNavigationBar: CurvedBottomNavigationBar(),
+          },
+        );
+        return logout ?? false;
+      },
+      child: Scaffold(
+        body: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text('Profile'),
+              onTap: () {
+                // Navigate to the profile page
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.history),
+              title: Text('Riwayat'),
+              onTap: () {
+                // Handle history page navigation
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.logout_outlined),
+              title: Text('Log Out'),
+              onTap: _logout,
+            ),
+          ],
+        ),
+        bottomNavigationBar: CurvedBottomNavigationBar(),
+      ),
     );
   }
 }

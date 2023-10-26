@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Validator {
   static String? validateName({required String? name}) {
     if (name == null) {
