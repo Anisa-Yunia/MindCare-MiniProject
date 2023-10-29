@@ -99,7 +99,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           labelText: 'E-mail',
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20.0)),
-                          errorBorder: UnderlineInputBorder(
+                          errorBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(6.0),
                             borderSide: BorderSide(
                               color: Colors.red,

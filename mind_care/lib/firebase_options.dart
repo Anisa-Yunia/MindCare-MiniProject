@@ -50,19 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCQ8B4a1Qb-x66ZCNUnmSkqXcTJeDUYKLA',
-    appId: '1:901581989215:web:4c9b9c4aa8a5916ab602ea',
-    messagingSenderId: '901581989215',
-    projectId: 'mind-care-minpro',
-    authDomain: 'mind-care-minpro.firebaseapp.com',
-    storageBucket: 'mind-care-minpro.appspot.com',
+    apiKey: 'AIzaSyCIhy2w3Dj5Z9hmS-dKoHw0gmP9x7gdETc',
+    appId: '1:652046343209:web:962b88735b6601037d9038',
+    messagingSenderId: '652046343209',
+    projectId: 'mindcare-project',
+    authDomain: 'mindcare-project.firebaseapp.com',
+    storageBucket: 'mindcare-project.appspot.com',
+    measurementId: 'G-DDM6NBXFXT',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCDMMGPpYYWSfVmSaTnilwvsnkzHYFYtBc',
-    appId: '1:901581989215:android:976c25e252dbcbe8b602ea',
-    messagingSenderId: '901581989215',
-    projectId: 'mind-care-minpro',
-    storageBucket: 'mind-care-minpro.appspot.com',
+    apiKey: 'AIzaSyCXUXmRaHgDhOIT7WgYTCzwwntGp-yKFYY',
+    appId: '1:652046343209:android:f9dd9936ffe9c3d67d9038',
+    messagingSenderId: '652046343209',
+    projectId: 'mindcare-project',
+    storageBucket: 'mindcare-project.appspot.com',
   );
 }

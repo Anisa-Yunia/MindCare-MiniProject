@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mind_care/view/chatbot_view.dart';
 import 'package:mind_care/view/login_view.dart';
+import 'package:mind_care/view/reservasi_view.dart';
 import 'package:mind_care/viewModel/widget/bottom_navigator.dart';
 import 'package:mind_care/viewModel/widget/drawer.dart';
 
@@ -121,7 +122,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     GestureDetector(
                       onTap: () {
                         // Pindah ke halaman ketiga
-                        //Navigator.push(context, MaterialPageRoute(builder: (context) => PageThree()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CardReservasi()));
                       },
                       child: Column(
                         children: [

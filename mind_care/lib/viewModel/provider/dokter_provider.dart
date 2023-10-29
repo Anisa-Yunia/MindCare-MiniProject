@@ -3,10 +3,10 @@ import 'package:dio/dio.dart';
 
 import '../../models/dokter.dart';
 
-class UserProvider with ChangeNotifier {
+class DokterProvider with ChangeNotifier {
   List<User> _userData = [];
   Dio dio = Dio();
-  String url = 'https://65389e61a543859d1bb1a570.mockapi.io/user';
+  String url = 'https://65389e61a543859d1bb1a570.mockapi.io/dokter';
 
   List<User> get userData => _userData;
 

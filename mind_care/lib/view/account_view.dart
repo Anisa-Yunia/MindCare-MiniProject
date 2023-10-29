@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mind_care/view/login_view.dart';
+import 'package:mind_care/view/profile_view.dart';
 import 'package:mind_care/viewModel/provider/user_provider.dart';
 import 'package:mind_care/viewModel/widget/bottom_navigator.dart';
 import 'package:provider/provider.dart';
@@ -52,9 +53,7 @@ class MenuScreen extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.person),
               title: Text('Profile'),
-              onTap: () {
-                // Navigate to the profile page
-              },
+              onTap: () {},
             ),
             ListTile(
               leading: Icon(Icons.history),

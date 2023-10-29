@@ -1,5 +1,5 @@
 class User {
-  final String name;
+  late final String name;
   final String profession;
   final String avatar;
 

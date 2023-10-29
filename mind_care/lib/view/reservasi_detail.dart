@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mind_care/viewModel/provider/history_user_provider.dart';
 import 'package:mind_care/viewModel/widget/bottom_navigator.dart';
+import 'package:provider/provider.dart';
 
 class ReservationPage extends StatefulWidget {
   @override
@@ -42,74 +44,81 @@ class _ReservationPageState extends State<ReservationPage> {
       appBar: AppBar(
         title: Text('Reservasi Dokter'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Pilih Tanggal dan Jam Reservasi',
-              style: TextStyle(fontSize: 20),
-            ),
-            SizedBox(height: 20),
-            Row(
+      body: ChangeNotifierProvider(
+        create: (context) => HistoryProvider(),
+        child: Consumer<HistoryProvider>(
+            builder: (context, historyProvider, child) {
+          return Center(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Tanggal Reservasi'),
-                SizedBox(
-                  width: 30,
+              children: <Widget>[
+                Text(
+                  'Pilih Tanggal dan Jam Reservasi',
+                  style: TextStyle(fontSize: 20),
                 ),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Tanggal Reservasi'),
+                    SizedBox(
+                      width: 30,
+                    ),
+                    ElevatedButton(
+                      onPressed: () => _selectDate(context),
+                      child: Text('Pilih Tanggal: ${selectedDate.toLocal()}'
+                          .split(' ')[0]),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Jam Reservasi'),
+                    SizedBox(
+                      width: 30,
+                    ),
+                    ElevatedButton(
+                      onPressed: () => _selectTime(context),
+                      child: Text('Pilih Jam: ${selectedTime.format(context)}'),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () => _selectDate(context),
-                  child: Text(
-                      'Pilih Tanggal: ${selectedDate.toLocal()}'.split(' ')[0]),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Jam Reservasi'),
-                SizedBox(
-                  width: 30,
-                ),
-                ElevatedButton(
-                  onPressed: () => _selectTime(context),
-                  child: Text('Pilih Jam: ${selectedTime.format(context)}'),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                String reservationDetails =
-                    'Anda telah mereservasi dokter pada:\n'
-                    'Tanggal: ${selectedDate.toLocal().toString().split(' ')[0]}\n'
-                    'Jam: ${selectedTime.format(context)}';
-
-                // Tampilkan AlertDialog dengan detail reservasi
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text('Hasil Reservasi'),
-                      content: Text(reservationDetails),
-                      actions: <Widget>[
-                        TextButton(
-                          child: Text('Tutup'),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
+                  onPressed: () {
+                    String reservationDetails =
+                        //'Anda telah mereservasi dokter pada:\n'
+                        'Tanggal: ${selectedDate.toLocal().toString().split(' ')[0]}\n'
+                        'Jam: ${selectedTime.format(context)}';
+                    historyProvider.addToHistory(reservationDetails);
+                    print('${historyProvider.history}');
+                    // Tampilkan AlertDialog dengan detail reservasi
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Hasil Reservasi'),
+                          content: Text(reservationDetails),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Text('Tutup'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
                     );
                   },
-                );
-              },
-              child: Text('Reservasi Sekarang'),
+                  child: Text('Reservasi Sekarang'),
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        }),
       ),
       bottomNavigationBar: CurvedBottomNavigationBar(),
     );

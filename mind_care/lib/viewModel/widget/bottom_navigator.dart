@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mind_care/view/account_view.dart';
 import 'package:mind_care/view/chatbot_view.dart';
+import 'package:mind_care/view/history_view.dart';
 import 'package:mind_care/view/home_view.dart';
 import 'package:mind_care/view/login_view.dart';
 import 'package:provider/provider.dart';
@@ -46,6 +47,8 @@ class _CurvedBottomNavigationBarState extends State<CurvedBottomNavigationBar> {
           break;
         case 2:
           _currentMenu = 'History';
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => ReservationListPage()));
           break;
         case 3:
           _currentMenu = 'Account';
