@@ -28,12 +28,16 @@ class ReservationListPage extends StatelessWidget {
           if (historyProvider.history.isEmpty) {
             return CircularProgressIndicator();
           } else {
-            print('Data dalam History ${historyProvider.history}');
+            print('Data dalam History ${historyProvider.getHistory()}');
+            final userHistory = historyProvider.getHistory();
             return ListView.builder(
-              itemCount: historyProvider.history.length,
+              itemCount: historyProvider.getHistory().length,
               itemBuilder: (context, index) {
+                final event = userHistory[index]["event"];
+                final tanggal = userHistory[index]["tanggal"];
+                final jam = userHistory[index]["jam"];
                 return ListTile(
-                  title: Text(historyProvider.history[index]),
+                  title: Text("Tanggal: $tanggal"),
                 );
               },
             );

@@ -88,11 +88,16 @@ class _ReservationPageState extends State<ReservationPage> {
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
+                    final newHistoryItem = {
+                      "event": "Anda telah mereservasi dokter pada:",
+                      "tanggal": "2023-11-01", // Ganti tanggal sesuai kebutuhan
+                      "jam": "3:30 PM", // Ganti jam sesuai kebutuhan
+                    };
                     String reservationDetails =
-                        //'Anda telah mereservasi dokter pada:\n'
+                        'Anda telah mereservasi dokter pada:\n'
                         'Tanggal: ${selectedDate.toLocal().toString().split(' ')[0]}\n'
                         'Jam: ${selectedTime.format(context)}';
-                    historyProvider.addToHistory(reservationDetails);
+                    historyProvider.addToHistory(newHistoryItem);
                     print('${historyProvider.history}');
                     // Tampilkan AlertDialog dengan detail reservasi
                     showDialog(
