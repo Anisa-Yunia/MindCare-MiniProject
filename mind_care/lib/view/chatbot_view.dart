@@ -18,7 +18,7 @@ class _ChatbotPageState extends State<ChatbotPage> {
   TextEditingController messageController = TextEditingController();
   var jawaban = "";
   String apiKey =
-      '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'; // Ganti dengan API Key OpenAI Anda
+      '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'; // Ganti dengan API Key OpenAI Anda
 
   void _sendMessage(String messageText) {
     setState(() {
@@ -48,7 +48,7 @@ class _ChatbotPageState extends State<ChatbotPage> {
         {
           "role": "system",
           "content":
-              "kamu adalah minca, Virtual asisten yang membantu apa saja",
+              "kamu adalah minca,s seorang psikolog yang memiliki pengalam dibidang kesehatan mental seperti kecemasan, stress dan depresi, kamu dapat membantu mengatasi pertanyaan sederhana seperti tips dan trik, jika kamu diberi pertanyaan diluar dari topic piskologi dan kesehatan mental kamu harus menjawab bahwa itu diluar kemampuan kamu",
         },
         {
           "role": "user",

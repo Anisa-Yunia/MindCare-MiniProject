@@ -1,49 +1,121 @@
 import 'package:flutter/material.dart';
 import 'package:mind_care/viewModel/provider/history_user_provider.dart';
+import 'package:mind_care/viewModel/widget/bottom_navigator.dart';
 import 'package:provider/provider.dart';
 
-// Contoh data reservasi
-List<String> reservations = [
-  "Anda telah mereservasi dokter pada:",
-  "Tanggal: 2023-10-31",
-  "Jam: 7:01 PM",
-  // Tambahkan data reservasi lainnya di sini
-];
-
-class ReservationListPage extends StatelessWidget {
-  //List<String>? history;
-
+class AllReservationsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // history = Provider.of<HistoryProvider>(context, listen: false).history;
-    // print(history);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Data Reservasi'),
+        title: Text('Semua Reservasi'),
       ),
-      body: ChangeNotifierProvider(
-        create: (context) => HistoryProvider(),
-        child: Consumer<HistoryProvider>(
-            builder: (context, historyProvider, child) {
-          if (historyProvider.history.isEmpty) {
-            return CircularProgressIndicator();
-          } else {
-            print('Data dalam History ${historyProvider.getHistory()}');
-            final userHistory = historyProvider.getHistory();
-            return ListView.builder(
-              itemCount: historyProvider.getHistory().length,
-              itemBuilder: (context, index) {
-                final event = userHistory[index]["event"];
-                final tanggal = userHistory[index]["tanggal"];
-                final jam = userHistory[index]["jam"];
-                return ListTile(
-                  title: Text("Tanggal: $tanggal"),
+      body: Consumer<ReservationProvider>(
+        builder: (context, reservationProvider, child) {
+          return ListView.builder(
+            itemCount: reservationProvider.reservations.length,
+            itemBuilder: (context, index) {
+              return Card(
+                margin: EdgeInsets.all(10),
+                child: ListTile(
+                  title: Text('Reservasi ${index + 1}'),
+                  subtitle:
+                      Text(reservationProvider.reservations[index].toString()),
+                  trailing: IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      // Panggil fungsi untuk menangani pengeditan data
+                      editReservation(context, reservationProvider, index);
+                    },
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      ),
+      bottomNavigationBar: CurvedBottomNavigationBar(),
+    );
+  }
+
+  void editReservation(
+      BuildContext context, ReservationProvider provider, int index) {
+    DateTime editedDate = DateTime.now(); // Tanggal awal yang akan diedit
+    TimeOfDay editedTime = TimeOfDay.now(); // Jam awal yang akan diedit
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Edit Tanggal dan Jam Reservasi'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                title: Text('Pilih Tanggal'),
+                subtitle: Text(
+                  '${editedDate.day}/${editedDate.month}/${editedDate.year}',
+                ),
+                trailing: IconButton(
+                  icon: Icon(Icons.date_range),
+                  onPressed: () async {
+                    final selectedDate = await showDatePicker(
+                      context: context,
+                      initialDate: editedDate,
+                      firstDate: DateTime(2022),
+                      lastDate: DateTime(2025),
+                    );
+                    if (selectedDate != null) {
+                      editedDate = selectedDate;
+                    }
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text('Pilih Jam'),
+                subtitle: Text(
+                  '${editedTime.format(context)}',
+                ),
+                trailing: IconButton(
+                  icon: Icon(Icons.access_time),
+                  onPressed: () async {
+                    final selectedTime = await showTimePicker(
+                      context: context,
+                      initialTime: editedTime,
+                    );
+                    if (selectedTime != null) {
+                      editedTime = selectedTime;
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                // Simpan perubahan ke data reservasi
+                final editedDateTime = DateTime(
+                  editedDate.year,
+                  editedDate.month,
+                  editedDate.day,
+                  editedTime.hour,
+                  editedTime.minute,
                 );
+                provider.editReservation(index, editedDateTime.toString());
+                Navigator.of(context).pop(); // Tutup dialog
               },
-            );
-          }
-        }),
-      ),
+              child: Text('Simpan'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Tutup dialog
+              },
+              child: Text('Batal'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

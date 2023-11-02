@@ -1,10 +1,27 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mind_care/view/login_view.dart';
-import 'package:mind_care/view/profile_view.dart';
+
 import 'package:mind_care/viewModel/provider/user_provider.dart';
 import 'package:mind_care/viewModel/widget/bottom_navigator.dart';
 import 'package:provider/provider.dart';
+
+Future<void> deleteAccount() async {
+  try {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      // Hapus akun pengguna
+      await user.delete();
+
+      print('Akun berhasil dihapus.');
+    } else {
+      print('Tidak ada pengguna yang masuk.');
+    }
+  } catch (e) {
+    print('Terjadi kesalahan saat menghapus akun: $e');
+  }
+}
 
 class MenuScreen extends StatelessWidget {
   @override
@@ -66,6 +83,23 @@ class MenuScreen extends StatelessWidget {
               leading: Icon(Icons.logout_outlined),
               title: Text('Log Out'),
               onTap: _logout,
+            ),
+            ListTile(
+              leading: Icon(Icons.delete),
+              title: Text('Hapus Akun'),
+              onTap: () async {
+                await deleteAccount(); // Panggil fungsi untuk menghapus akun
+
+                // Setelah akun dihapus, logout dari Firebase Authentication
+                await FirebaseAuth.instance.signOut();
+
+                // Navigasi ke layar login atau layar awal aplikasi (sesuai kebutuhan Anda)
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            LoginScreen())); // Gantilah dengan rute yang sesuai
+              },
             ),
           ],
         ),

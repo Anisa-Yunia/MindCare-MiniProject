@@ -20,6 +20,7 @@ class DokterProvider with ChangeNotifier {
                   name: userData['name'],
                   profession: userData['Profesi'],
                   avatar: userData['avatar'],
+                  topic: userData['Topik'],
                 ))
             .toList();
 

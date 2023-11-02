@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mind_care/view/history_view.dart';
+import 'package:mind_care/view/reservasi_detail.dart';
 import 'package:mind_care/viewModel/provider/dokter_provider.dart';
+import 'package:mind_care/viewModel/widget/bottom_navigator.dart';
 import 'package:provider/provider.dart';
 
 class CardReservasi extends StatefulWidget {
@@ -33,16 +36,20 @@ class _CardReservasiState extends State<CardReservasi> {
                             NetworkImage(userProvider.userData[index].avatar),
                       ),
                       title: Text(' ${userProvider.userData[index].name}'),
-                      subtitle: Text(
-                          'Usia: ${userProvider.userData[index].profession} '
-                          //tahun\nPekerjaan: ${people[index].occupation}'
-                          ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('${userProvider.userData[index].profession}'),
+                          Text('${userProvider.userData[index].topic}'),
+                        ],
+                      ),
                       trailing: Column(
                         children: [
                           SizedBox(height: 10),
                           ElevatedButton(
                             onPressed: () {
-                              // Tambahkan aksi yang ingin Anda lakukan ketika tombol ditinggikan ditekan di sini.
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => ReservationPage()));
                             },
                             child: Text('Reservasi'),
                           ),
@@ -56,6 +63,7 @@ class _CardReservasiState extends State<CardReservasi> {
           },
         ),
       ),
+      bottomNavigationBar: CurvedBottomNavigationBar(),
     );
   }
 }
