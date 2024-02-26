@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mind_care/view/home_view.dart';
-import 'package:mind_care/viewModel/helpen/firebase_auth.dart';
-import 'package:mind_care/viewModel/helpen/validator.dart';
+import 'package:mind_care/viewModel/helper/firebase_auth.dart';
+import 'package:mind_care/viewModel/helper/validator.dart';
 
 class SignUpScreen extends StatefulWidget {
   @override
