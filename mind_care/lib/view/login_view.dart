@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mind_care/view/home_view.dart';
-import 'package:mind_care/viewModel/helper/firebase_auth.dart';
-import 'package:mind_care/viewModel/helper/validator.dart';
+import 'package:mind_care/viewModel/helpen/firebase_auth.dart';
+import 'package:mind_care/viewModel/helpen/validator.dart';
 
 import 'package:mind_care/view/sign_up_view.dart';
 
@@ -56,51 +56,33 @@ class _LoginScreenState extends State<LoginScreen> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return Padding(
-                padding: const EdgeInsets.only(left: 24.0, right: 24.0),
+                padding:
+                    const EdgeInsets.only(left: 24.0, right: 24.0, top: 48),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: 200,
+                    Center(
+                      child: SizedBox(
+                          child: Image.asset(
+                        'images/mindCare.png',
+                        width: 170,
+                        height: 170,
+                      )),
                     ),
                     Text(
                       'MindCare',
                       style: TextStyle(
-                          color: Colors.blueGrey,
-                          fontSize: 50,
-                          fontWeight: FontWeight.bold,
-                          height: 1.0),
+                        color: Colors.blueGrey,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
                       'Your Mental Wellness Companion',
                       style: TextStyle(
-                        color: Colors.blueGrey,
-                        fontSize: 18,
-                        height: 1.0,
-                      ),
+                          color: Colors.blueGrey.shade600, fontSize: 16),
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          'Tidak Memiliki akun?',
-                          style: TextStyle(
-                              color: Colors.blueGrey.shade800, fontSize: 14),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) => SignUpScreen()));
-                          },
-                          child: Text(
-                            'Daftar',
-                            style: TextStyle(
-                                color: Colors.blueGrey.shade800, fontSize: 14),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 40),
+                    SizedBox(height: 15),
                     Form(
                       key: _formKey,
                       child: Column(
@@ -127,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 15.0),
+                          SizedBox(height: 10.0),
                           TextFormField(
                             controller: _passwordTextController,
                             focusNode: _focusPassword,
@@ -151,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 30.0),
+                          SizedBox(height: 24.0),
                           _isProcessing
                               ? CircularProgressIndicator()
                               : Row(
@@ -195,6 +177,28 @@ class _LoginScreenState extends State<LoginScreen> {
                                         },
                                         child: Text(
                                           'Sign In',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  Colors.blueGrey.shade300),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 24.0),
+                                    Expanded(
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SignUpScreen(),
+                                            ),
+                                          );
+                                        },
+                                        child: Text(
+                                          'Sign Up',
                                           style: TextStyle(color: Colors.white),
                                         ),
                                         style: ButtonStyle(

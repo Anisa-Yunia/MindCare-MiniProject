@@ -7,65 +7,15 @@ import 'package:mind_care/viewModel/provider/user_provider.dart';
 import 'package:mind_care/viewModel/widget/bottom_navigator.dart';
 import 'package:provider/provider.dart';
 
-Future<void> deleteAccount(BuildContext context) async {
+Future<void> deleteAccount() async {
   try {
     User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
-      // Show an alert dialog to confirm account deletion
-      bool deleteConfirmed = await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Confirmation'),
-            content: Text('Are you sure you want to delete your account?'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .pop(false); // User canceled the deletion
-                },
-                child: Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .pop(true); // User confirmed the deletion
-                },
-                child: Text('Delete'),
-              ),
-            ],
-          );
-        },
-      );
+      // Hapus akun pengguna
+      await user.delete();
 
-      if (deleteConfirmed == true) {
-        // Hapus akun pengguna
-        await user.delete();
-
-        // Show success dialog
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Account Deleted'),
-              content: Text('Your account has been successfully deleted.'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(); // Close the success dialog
-                    // Navigate to login page or any other appropriate screen
-                    Navigator.of(context).pushReplacementNamed('/login');
-                  },
-                  child: Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
-
-        print('Akun berhasil dihapus.');
-      }
+      print('Akun berhasil dihapus.');
     } else {
       print('Tidak ada pengguna yang masuk.');
     }
@@ -87,39 +37,37 @@ class MenuScreen extends StatelessWidget {
     }
 
     return WillPopScope(
-        onWillPop: () async {
-          final logout = await showDialog<bool>(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: Text('Are you sure?'),
-                content: Text('Do you want to logout from this App'),
-                actionsAlignment: MainAxisAlignment.spaceBetween,
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      _logout();
-                    },
-                    child: const Text('Yes'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context, false);
-                    },
-                    child: const Text('No'),
-                  ),
-                ],
-              );
-            },
-          );
-          return logout ?? false;
-        },
-        child: Scaffold(
-          bottomNavigationBar: CurvedBottomNavigationBar(),
-          body: ListView(padding: EdgeInsets.zero, children: <Widget>[
-            SizedBox(
-              height: 50,
-            ),
+      onWillPop: () async {
+        final logout = await showDialog<bool>(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Are you sure?'),
+              content: Text('Do you want to logout from this App'),
+              actionsAlignment: MainAxisAlignment.spaceBetween,
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    _logout();
+                  },
+                  child: const Text('Yes'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context, false);
+                  },
+                  child: const Text('No'),
+                ),
+              ],
+            );
+          },
+        );
+        return logout ?? false;
+      },
+      child: Scaffold(
+        body: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
             ListTile(
               leading: Icon(Icons.person),
               title: Text('Profile'),
@@ -144,49 +92,23 @@ class MenuScreen extends StatelessWidget {
               leading: Icon(Icons.delete),
               title: Text('Hapus Akun'),
               onTap: () async {
-                bool deleteConfirmed = await showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text('Confirmation'),
-                      content:
-                          Text('Are you sure you want to delete your account?'),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context)
-                                .pop(false); // User canceled the deletion
-                          },
-                          child: Text('Cancel'),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context)
-                                .pop(true); // User confirmed the deletion
-                          },
-                          child: Text('Delete'),
-                        ),
-                      ],
-                    );
-                  },
-                );
+                await deleteAccount(); // Panggil fungsi untuk menghapus akun
 
-                if (deleteConfirmed == true) {
-                  await deleteAccount(
-                      context); // Pass the context to the deleteAccount function
+                // Setelah akun dihapus, logout dari Firebase Authentication
+                await FirebaseAuth.instance.signOut();
 
-                  // After account deletion, logout from Firebase Authentication
-                  await FirebaseAuth.instance.signOut();
-
-                  // Navigate to the login screen or the initial screen of the application
-                  Navigator.pushReplacement(
+                // Navigasi ke layar login atau layar awal aplikasi (sesuai kebutuhan Anda)
+                Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
-                  );
-                }
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            LoginScreen())); // Gantilah dengan rute yang sesuai
               },
             ),
-          ]),
-        ));
+          ],
+        ),
+        bottomNavigationBar: CurvedBottomNavigationBar(),
+      ),
+    );
   }
 }
